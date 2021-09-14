@@ -49,6 +49,9 @@ class _CreateScreenState extends State<CreateScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                        validator: (input) => input.length < 1
+                          ? 'title can not be empty'
+                          : null,
                         onSaved: (input) => _title = input,
                       ),
                     ),
@@ -62,19 +65,25 @@ class _CreateScreenState extends State<CreateScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                        validator: (input) => input.length < 1
+                          ? 'author name can not be empty'
+                          : null,
                         onSaved: (input) => _author = input,
                       ),
                     ),
                     SizedBox(height:8.0),
                     Container(
                       child: TextFormField(
-                        maxLines: 25,
+                        maxLines: 24,
                         decoration:InputDecoration(
                             hintText: 'Write blog here...',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                        validator: (input) => input.length < 1
+                          ? 'body can not be empty'
+                          : null,                          
                         onSaved: (input) => _body = input,
                       ),
                     ),
