@@ -56,13 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Row(
                             children:[
-                              Icon(Icons.person_outline, color:Colors.grey[600]),
+                              Icon(Icons.person_outline, color:Colors.grey),
                               SizedBox(width:4.0),
                               Text('Parikshit Gothwal', style: TextStyle(color: Colors.grey[600])),
                             ],
                           ),
                           Row(children:[
-                            Icon(Icons.date_range, color:Colors.grey[600]),
+                            Icon(Icons.history, color:Colors.grey),
                             SizedBox(width:4.0),
                             Text('26 Feb 1997', style: TextStyle(color: Colors.grey[600])),
                             ],
