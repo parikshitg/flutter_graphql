@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/parikshitg/flutter_graphql/go-gql-server/graph"
+	"github.com/parikshitg/flutter_graphql/go-gql-server/graph/generated"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
-	"github.com/parikshitg/flutter_graphql/go-gql-server/graph"
-	"github.com/parikshitg/flutter_graphql/go-gql-server/graph/generated"
 	"github.com/rs/cors"
 )
 

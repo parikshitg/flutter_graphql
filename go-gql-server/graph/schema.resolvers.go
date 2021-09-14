@@ -11,11 +11,11 @@ import (
 	"github.com/parikshitg/flutter_graphql/go-gql-server/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateBlog(ctx context.Context, input model.NewBlog) (*model.Blog, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *queryResolver) Blogs(ctx context.Context) ([]*model.Blog, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
