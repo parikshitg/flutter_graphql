@@ -1,7 +1,7 @@
 scalar Time
 
 type Blog {
-  id: ID!
+  id: Int!
   title: String!
   author: String!
   date: Time!
@@ -9,7 +9,7 @@ type Blog {
 }
 
 type Query {
-  blogs: [Blog!]!
+  getBlogs: [Blog!]!
 }
 
 input NewBlog {

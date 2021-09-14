@@ -5,18 +5,44 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/parikshitg/flutter_graphql/go-gql-server/graph/generated"
 	"github.com/parikshitg/flutter_graphql/go-gql-server/graph/model"
 )
 
-func (r *mutationResolver) CreateBlog(ctx context.Context, input model.NewBlog) (*model.Blog, error) {
-	panic(fmt.Errorf("not implemented"))
+var db = make(map[int]*model.Blog)
+
+func getId(db map[int]*model.Blog) int {
+	id := 0
+	for k, _ := range db {
+		if k > id {
+			id = k
+		}
+	}
+	return id + 1
 }
 
-func (r *queryResolver) Blogs(ctx context.Context) ([]*model.Blog, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *mutationResolver) CreateBlog(ctx context.Context, input model.NewBlog) (*model.Blog, error) {
+	blog := &model.Blog{
+		ID:     getId(db),
+		Title:  input.Title,
+		Author: input.Author,
+		Date:   input.Date,
+		Body:   input.Body,
+	}
+
+	db[blog.ID] = blog
+
+	return blog, nil
+}
+
+func (r *queryResolver) GetBlogs(ctx context.Context) ([]*model.Blog, error) {
+	var blogs []*model.Blog
+	for _, v := range db {
+		blogs = append(blogs, v)
+	}
+
+	return blogs, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

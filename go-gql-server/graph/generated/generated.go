@@ -57,7 +57,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Blogs func(childComplexity int) int
+		GetBlogs func(childComplexity int) int
 	}
 }
 
@@ -65,7 +65,7 @@ type MutationResolver interface {
 	CreateBlog(ctx context.Context, input model.NewBlog) (*model.Blog, error)
 }
 type QueryResolver interface {
-	Blogs(ctx context.Context) ([]*model.Blog, error)
+	GetBlogs(ctx context.Context) ([]*model.Blog, error)
 }
 
 type executableSchema struct {
@@ -130,12 +130,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateBlog(childComplexity, args["input"].(model.NewBlog)), true
 
-	case "Query.blogs":
-		if e.complexity.Query.Blogs == nil {
+	case "Query.getBlogs":
+		if e.complexity.Query.GetBlogs == nil {
 			break
 		}
 
-		return e.complexity.Query.Blogs(childComplexity), true
+		return e.complexity.Query.GetBlogs(childComplexity), true
 
 	}
 	return 0, false
@@ -204,7 +204,7 @@ var sources = []*ast.Source{
 	{Name: "graph/schema.graphqls", Input: `scalar Time
 
 type Blog {
-  id: ID!
+  id: Int!
   title: String!
   author: String!
   date: Time!
@@ -212,7 +212,7 @@ type Blog {
 }
 
 type Query {
-  blogs: [Blog!]!
+  getBlogs: [Blog!]!
 }
 
 input NewBlog {
@@ -331,9 +331,9 @@ func (ec *executionContext) _Blog_id(ctx context.Context, field graphql.Collecte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Blog_title(ctx context.Context, field graphql.CollectedField, obj *model.Blog) (ret graphql.Marshaler) {
@@ -518,7 +518,7 @@ func (ec *executionContext) _Mutation_createBlog(ctx context.Context, field grap
 	return ec.marshalNBlog2ᚖgithubᚗcomᚋparikshitgᚋflutter_graphqlᚋgoᚑgqlᚑserverᚋgraphᚋmodelᚐBlog(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_blogs(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_getBlogs(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -536,7 +536,7 @@ func (ec *executionContext) _Query_blogs(ctx context.Context, field graphql.Coll
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Blogs(rctx)
+		return ec.resolvers.Query().GetBlogs(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1894,7 +1894,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "blogs":
+		case "getBlogs":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
 				defer func() {
@@ -1902,7 +1902,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_blogs(ctx, field)
+				res = ec._Query_getBlogs(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -2246,13 +2246,13 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
-	res, err := graphql.UnmarshalID(v)
+func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
+	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
-	res := graphql.MarshalID(v)
+func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
+	res := graphql.MarshalInt(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
