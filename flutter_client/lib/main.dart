@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_client/config/config.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import './screens/home_screen.dart';
 
@@ -7,15 +9,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Graphql Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
+    final ValueNotifier<GraphQLClient> client = ValueNotifier(
+      GraphQLClient(
+        link: HttpLink('$BASE_URL'),
+        cache:GraphQLCache(store: InMemoryStore()),
       ),
-      home: HomeScreen(),
+    );
+
+    return GraphQLProvider(
+      client: client,
+      child: MaterialApp(
+      title: 'Flutter Graphql Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+        ),
+        home: HomeScreen(),
+      )
     );
   }
 }
