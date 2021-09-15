@@ -38,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }) {
           if (result.hasException) {
-              return Text(result.exception.toString());
+            print(' Graphql Exception: ${result.exception}');
+            return Center(child: Text('No Connection'));
           }
 
           if (result.isLoading) {
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children:[
                         Text("${blogs[i]['title']}", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),),
                         SizedBox(height: 8.0,),
-                        Text("Here goes my very long long long long body content... goes my very long long long long body content...", style: TextStyle(color: Colors.grey[800])),
+                        Text("${blogs[i]['body']}", style: TextStyle(color: Colors.grey[800])),
                         Padding(
                           padding: const EdgeInsets.only(left:20.0, right:20.0),
                           child: Divider(
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children:[
                                 Icon(Icons.person_outline, color:Colors.grey),
                                 SizedBox(width:4.0),
-                                Text('Parikshit Gothwal', style: TextStyle(color: Colors.grey[600])),
+                                Text('${blogs[i]['author']}', style: TextStyle(color: Colors.grey[600])),
                               ],
                             ),
                             Row(children:[
