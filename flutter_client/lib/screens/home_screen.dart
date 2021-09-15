@@ -5,6 +5,25 @@ import './create_screen.dart';
 import '../config/query.dart';
 import '../config/config.dart';
 
+String getTitle(String title){
+  if (title.length > 50) {
+    return title.substring(0,50);
+  }
+  return title;
+}
+
+String getBody(String body){
+  if (body.length > 80) {
+    return body.substring(0,80);
+  }
+  return body;
+}
+
+// dd-mm-yyyy
+String getDate(String date){
+  return date.toString().substring(8,10) + "-" + date.toString().substring(5,7)+ "-" + date.toString().substring(0,4);
+}
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -61,9 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children:[
-                        Text("${blogs[i]['title']}", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),),
+                        Text("${getTitle(blogs[i]['title'])}...", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),),
                         SizedBox(height: 8.0,),
-                        Text("${blogs[i]['body']}", style: TextStyle(color: Colors.grey[800])),
+                        Text("${getBody(blogs[i]['body'])}...", style: TextStyle(color: Colors.grey[800])),
                         Padding(
                           padding: const EdgeInsets.only(left:20.0, right:20.0),
                           child: Divider(
@@ -77,13 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               children:[
                                 Icon(Icons.person_outline, color:Colors.grey),
                                 SizedBox(width:4.0),
-                                Text('${blogs[i]['author']}', style: TextStyle(color: Colors.grey[600])),
+                                Text('${blogs[i]['author']}', style: TextStyle(color: Colors.grey[600], fontStyle: FontStyle. italic)),
                               ],
                             ),
                             Row(children:[
                               Icon(Icons.history, color:Colors.grey),
                               SizedBox(width:4.0),
-                              Text('26 Feb 1997', style: TextStyle(color: Colors.grey[600])),
+                              Text('${getDate(blogs[i]['date'])}', style: TextStyle(color: Colors.grey[600], fontStyle: FontStyle. italic)),
                               ],
                             ),
                           ],

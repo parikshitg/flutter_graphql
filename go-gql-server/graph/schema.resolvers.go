@@ -14,7 +14,7 @@ var db = make(map[int]*model.Blog)
 
 func getId(db map[int]*model.Blog) int {
 	id := 0
-	for k, _ := range db {
+	for k := range db {
 		if k > id {
 			id = k
 		}
