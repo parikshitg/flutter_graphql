@@ -13,14 +13,14 @@ This projects demonstrates the ideal way to call graphql queries and mutations. 
 To run golang backend server:
 
 ```
-cd flutter_graphql/go-server
+cd flutter_graphql/go-gql-server
 make run or go run server.go  
 ```
 
 To run flutter app:
  
 ```
-cd flutter_a/flutter_client
+cd flutter_graphql/flutter_client
 flutter pub get
 flutter run
 ```
